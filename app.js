@@ -1,6 +1,7 @@
 const game = document.getElementById('game')
 const scoreDisplay = document.getElementById('score')
 let score = 0
+let players = []
 
 const jeopardyCategories = [
     {
@@ -107,19 +108,17 @@ const jeopardyCategories = [
 
 function addCategory(category) {
     const column = document.createElement('div')
-    column.classList.add('genre=column')
+    column.classList.add('genre-column')
 
     const genreTitle = document.createElement('div')
     genreTitle.classList.add('genre-title')
     genreTitle.innerText = category.genre
     column.append(genreTitle)
-    game.append(column)
-
+    
     category.questions.forEach(question => {
         const card = document.createElement('div')
         card.classList.add('card')
-        column.append(card)
-
+        
         if(question.level === 'easy') {
             card.innerHTML = 100
         } else if(question.level === 'medium') {
@@ -131,9 +130,12 @@ function addCategory(category) {
         card.setAttribute('data-question', question.question)
         card.setAttribute('data-answer', question.answer)
         card.setAttribute('data-value', card.innerHTML)
-
+        
         card.addEventListener('click', flipCard)
+        column.append(card)
     })
+
+    game.append(column)
 }
 
 function flipCard() {
@@ -164,4 +166,38 @@ function getResult() {
     cardOfButton.removeEventListener('click', flipCard)
 }
 
+function setPlayers(numberOfPlayers, playerSetupBox) {
+    const prevTextFields = document.querySelectorAll('.player-name-textfield')
+    prevTextFields.forEach(textfield => textfield.remove())
+
+    for(let index = 0; index < numberOfPlayers; index++) {
+        const playerNameTextField = document.createElement('input')
+        playerNameTextField.placeholder = "Enter Name for player " + (index + 1)
+        playerNameTextField.classList.add('player-name-textfield')
+        playerSetupBox.append(playerNameTextField)
+    }
+}
+
+function initPlayers() {
+    const playerSetupBox = document.createElement('div')
+    playerSetupBox.classList.add('player-setup')
+    
+    const playerMessageLabel = document.createElement('h2')
+    playerMessageLabel.innerHTML = "Please select the number of players"
+    playerSetupBox.append(playerMessageLabel)
+    
+    const playerSelect = document.createElement('select')
+    playerSelect.options[playerSelect.options.length] = new Option(1)
+    playerSelect.options[playerSelect.options.length] = new Option(2)
+    playerSelect.options[playerSelect.options.length] = new Option(3)
+    playerSelect.classList.add('player-select')
+    playerSelect.addEventListener('change', () => setPlayers(playerSelect.selectedIndex + 1, playerSetupBox))
+    playerSetupBox.append(playerSelect)
+    
+    game.append(playerSetupBox)
+}
+
+
+
+initPlayers()
 jeopardyCategories.forEach(category => addCategory(category))

@@ -39,3 +39,10 @@ body {
     font-size: 28px;
     padding: 5px;
 }
+.player-setup {
+    background-color: aqua;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    color: black;
+}
