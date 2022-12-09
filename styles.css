@@ -1,0 +1,41 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(46,46,46);
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#game {
+    background-color: rgb(32,32,32);
+    display: flex;
+}
+
+.card {
+    width: 160px;
+    height: 120px;
+    background-color: rgb(26,26,255);
+    border-left: solid rgb(19,19,160) 10px;
+    border-right: solid rgb(11,11,160) 10px;
+    border-top: solid rgb(1,61,200) 10px;
+    border-bottom: solid rgb(20,20,89) 10px;
+    text-align: center;
+    font-size: 100px;
+    margin: 5px;
+    padding: 10px;
+    line-height: 120px;
+}
+.answer-button {
+    background-color: rgb(24,171,24);
+}
+
+.genre-title {
+    background-color: rgb(26,26,255);
+    text-align: center;
+    font-size: 28px;
+    padding: 5px;
+}
