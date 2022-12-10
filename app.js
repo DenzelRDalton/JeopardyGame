@@ -166,16 +166,39 @@ function getResult() {
     cardOfButton.removeEventListener('click', flipCard)
 }
 
+function savePlayers(playerNameList, playerSetupBox) {
+    playerNameList.forEach(playerName => {
+        const name = document.createElement('div')
+        const span = `<span id=${playerName.value}></span>`
+        name.innerHTML = playerName.value + span
+        scoreDisplay.append(name)
+    })
+
+    playerSetupBox.remove()
+}
+
 function setPlayers(numberOfPlayers, playerSetupBox) {
     const prevTextFields = document.querySelectorAll('.player-name-textfield')
     prevTextFields.forEach(textfield => textfield.remove())
 
     for(let index = 0; index < numberOfPlayers; index++) {
+        const row = document.createElement('div')
         const playerNameTextField = document.createElement('input')
         playerNameTextField.placeholder = "Enter Name for player " + (index + 1)
         playerNameTextField.classList.add('player-name-textfield')
+        row.classList.add('break')
+        playerSetupBox.append(row)
         playerSetupBox.append(playerNameTextField)
     }
+
+    const row = document.createElement('div')
+    row.classList.add('break')
+    playerSetupBox.append(row)
+    const submitButton = document.createElement('button')
+    submitButton.innerHTML = "submit"
+    submitButton.addEventListener('click', ()=> savePlayers(document.querySelectorAll('.player-name-textfield'), playerSetupBox))
+    playerSetupBox.append(submitButton)
+
 }
 
 function initPlayers() {
