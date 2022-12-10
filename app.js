@@ -1,6 +1,5 @@
 const game = document.getElementById('game')
 const scoreDisplay = document.getElementById('score')
-let score = 0
 let players = []
 
 const jeopardyCategories = [
@@ -155,14 +154,42 @@ function flipCard() {
     allCards.forEach(card => card.removeEventListener('click', flipCard))
 }
 
+function incrementPlayerScore(value, playerName, playerButtonList) {
+    players.forEach(player => {
+        if(player.playerName === playerName) {
+            player.playerScore += value
+            const playerScoreDisplay = document.getElementById(playerName)
+            playerScoreDisplay.innerHTML = "\t" + player.playerScore
+        }
+    })
+    deactivatePlayerButtons(playerButtonList)
+}
+
+function deactivatePlayerButtons(playerButtonList) {
+    playerButtonList.forEach(button => button.remove())
+}
+
 function getResult() {
     const allCards = Array.from(document.querySelectorAll('.card'))
     allCards.forEach(card => card.addEventListener('click', flipCard))
 
     const cardOfButton = this.parentElement
-    score += parseInt(cardOfButton.getAttribute('data-value'))
+    const score = parseInt(cardOfButton.getAttribute('data-value'))
+    let playerButtonList = []
     cardOfButton.innerHTML = cardOfButton.getAttribute('data-answer')
-    scoreDisplay.innerHTML = score
+    players.forEach(player => {
+        const playerButton = document.createElement('button')
+        playerButton.innerHTML = player.playerName
+        playerButton.classList.add('playerButton')
+        playerButton.addEventListener('click', () => incrementPlayerScore(score, player.playerName, playerButtonList))
+        playerButtonList.push(playerButton)
+        cardOfButton.append(playerButton)
+    })
+    const noneButton = document.createElement('button')
+    noneButton.innerHTML = "none"
+    noneButton.addEventListener('click', () => deactivatePlayerButtons(playerButtonList))
+    playerButtonList.push(noneButton)
+    cardOfButton.append(noneButton)
     cardOfButton.removeEventListener('click', flipCard)
 }
 
@@ -172,6 +199,15 @@ function savePlayers(playerNameList, playerSetupBox) {
         const span = `<span id=${playerName.value}></span>`
         name.innerHTML = playerName.value + span
         scoreDisplay.append(name)
+
+        players.push(
+            {
+                playerName: playerName.value,
+                playerScore: 0
+            }
+        )
+        const playerScoreDisplay = document.getElementById(playerName.value)
+        playerScoreDisplay.innerHTML = "\t" + 0
     })
 
     playerSetupBox.remove()
