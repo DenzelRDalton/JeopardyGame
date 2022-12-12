@@ -1,6 +1,8 @@
 const game = document.getElementById('game')
 const scoreDisplay = document.getElementById('score')
 let players = []
+let apiCategories = []
+let apiQuestions = []
 
 const jeopardyCategories = [
     {
@@ -256,7 +258,20 @@ function initPlayers() {
     game.append(playerSetupBox)
 }
 
+async function getCategories() {
+    apiCategories = await fetch('https://jservice.io/api/categories?count=5').then(cat => cat.json())
+    apiCategories.forEach(async (category) => {
+        for(let index = 1; index <= 5; index++) {
+            // console.log(category.title)
+            apiQuestions.push(await fetch('https://jservice.io/api/clues?value=' + (index * 100) + '&category=' + category.id).then(q => q.json()))
+        }
+    })
+    console.log(apiCategories)
+    console.log(apiQuestions)
+}
 
 
 initPlayers()
 jeopardyCategories.forEach(category => addCategory(category))
+getCategories()
+
