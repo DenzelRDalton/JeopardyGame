@@ -75,13 +75,14 @@ function getResult() {
     players.forEach(player => {
         const playerButton = document.createElement('button')
         playerButton.innerHTML = player.playerName
-        playerButton.classList.add('playerButton')
+        playerButton.classList.add('player-button')
         playerButton.addEventListener('click', () => incrementPlayerScore(score, player.playerName, playerButtonList))
         playerButtonList.push(playerButton)
         cardOfButton.append(playerButton)
     })
     const noneButton = document.createElement('button')
     noneButton.innerHTML = "none"
+    noneButton.classList.add('player-button')
     noneButton.addEventListener('click', () => deactivatePlayerButtons(playerButtonList))
     playerButtonList.push(noneButton)
     cardOfButton.append(noneButton)
@@ -126,6 +127,7 @@ function setPlayers(numberOfPlayers, playerSetupBox) {
     row.classList.add('break')
     playerSetupBox.append(row)
     const submitButton = document.createElement('button')
+    submitButton.classList.add('submit-button')
     submitButton.innerHTML = "submit"
     submitButton.addEventListener('click', ()=> savePlayers(document.querySelectorAll('.player-name-textfield'), playerSetupBox))
     playerSetupBox.append(submitButton)

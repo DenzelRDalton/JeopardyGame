@@ -13,10 +13,11 @@ body {
 #game {
     background-color: rgb(32,32,32);
     display: flex;
+    overflow: hidden;
 }
 
 .card {
-    width: 160px;
+    width: 75%;
     height: 120px;
     background-color: rgb(26,26,255);
     border-left: solid rgb(19,19,160) 10px;
@@ -28,6 +29,13 @@ body {
     margin: 5px;
     padding: 10px;
     line-height: 120px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.card::-webkit-scrollbar{
+    display: none;
 }
 .answer-button {
     background-color: rgb(24,171,24);
@@ -40,13 +48,14 @@ body {
     padding: 5px;
 }
 .player-setup {
-    background-color: aqua;
+    background-color: #121826;
     text-align: center;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    color: black;
+    color: white;
     justify-content: center;
+    width: 25%;
 }
 .player-name-textfield {
     display: flex;
@@ -57,4 +66,28 @@ body {
     display: flex;
     flex-basis: 100%;
     height: 0;
+}
+.player-select {
+    border-radius: 25%;
+    color: white;
+    background-color: #1e3b32;
+    padding: 5px;
+    margin: 5px;
+}
+.player-name-textfield {
+    color: white;
+    background-color: #1e3b32;   
+}
+.player-button {
+    display: block;
+    position: relative;
+    width: 100%;
+    border-radius: 25%;
+    background-color: #1e3b32;
+    color: white;
+}
+.submit-button {
+    border-radius: 25%;
+    background-color: #1e3b32;
+    color: white;
 }
