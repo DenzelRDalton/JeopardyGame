@@ -4,130 +4,23 @@ let players = []
 let apiCategories = []
 let apiQuestions = []
 
-const jeopardyCategories = [
-    {
-        genre: "WHO",
-        questions: [
-            {
-                question: 'Who wrote Harry Potter?',
-                answer: 'JK Rowling.',
-                level: 'easy'
-            },
-            {
-                question: 'Who wrote Harry Potter?',
-                answer: 'JK Rowling.',
-                level: 'medium'
-            },
-            {
-                question: 'Who wrote Harry Potter?',
-                answer: 'JK Rowling.',
-                level: 'hard'
-            },
-        ]
-    },
-    {
-        genre: "WHERE",
-        questions: [
-            {
-                question: 'Who wrote Harry Potter?',
-                answer: 'JK Rowling.',
-                level: 'easy'
-            },
-            {
-                question: 'Who wrote Harry Potter?',
-                answer: 'JK Rowling.',
-                level: 'medium'
-            },
-            {
-                question: 'Who wrote Harry Potter?',
-                answer: 'JK Rowling.',
-                level: 'hard'
-            },
-        ]
-    },
-    {
-        genre: "WHO",
-        questions: [
-            {
-                question: 'Who wrote Harry Potter?',
-                answer: 'JK Rowling.',
-                level: 'easy'
-            },
-            {
-                question: 'Who wrote Harry Potter?',
-                answer: 'JK Rowling.',
-                level: 'medium'
-            },
-            {
-                question: 'Who wrote Harry Potter?',
-                answer: 'JK Rowling.',
-                level: 'hard'
-            },
-        ]
-    },
-    {
-        genre: "WHO",
-        questions: [
-            {
-                question: 'Who wrote Harry Potter?',
-                answer: 'JK Rowling.',
-                level: 'easy'
-            },
-            {
-                question: 'Who wrote Harry Potter?',
-                answer: 'JK Rowling.',
-                level: 'medium'
-            },
-            {
-                question: 'Who wrote Harry Potter?',
-                answer: 'JK Rowling.',
-                level: 'hard'
-            },
-        ]
-    },
-    {
-        genre: "WHO",
-        questions: [
-            {
-                question: 'Who wrote Harry Potter?',
-                answer: 'JK Rowling.',
-                level: 'easy'
-            },
-            {
-                question: 'Who wrote Harry Potter?',
-                answer: 'JK Rowling.',
-                level: 'medium'
-            },
-            {
-                question: 'Who wrote Harry Potter?',
-                answer: 'JK Rowling.',
-                level: 'hard'
-            },
-        ]
-    },
-]
 
-function addCategory(category) {
+
+function addCategory(category, questions) {
+
     const column = document.createElement('div')
     column.classList.add('genre-column')
 
     const genreTitle = document.createElement('div')
     genreTitle.classList.add('genre-title')
-    genreTitle.innerText = category.genre
+    genreTitle.innerText = category.title
     column.append(genreTitle)
     
-    category.questions.forEach(question => {
+    questions.forEach(question => {
         const card = document.createElement('div')
         card.classList.add('card')
         
-        if(question.level === 'easy') {
-            card.innerHTML = 100
-        } else if(question.level === 'medium') {
-            card.innerHTML = 200
-        } else {
-            card.innerHTML = 300
-        }
-        
+        card.innerHTML = question.value
         card.setAttribute('data-question', question.question)
         card.setAttribute('data-answer', question.answer)
         card.setAttribute('data-value', card.innerHTML)
@@ -264,9 +157,7 @@ async function getCategories() {
     for(let index = 1; index <= 5; index++) {
         let num = (Math.floor(Math.random() * 99) + 1)
         let request = 'https://jservice.io/api/category?id=' + num
-        console.log(request)
         let response = await fetch(request).then(category => category.json())
-        console.log(response)
         apiCategories.push(response)
         
 
@@ -280,19 +171,22 @@ async function getCategories() {
     apiCategories.forEach(async (category) => {
         let request = 'https://jservice.io/api/clues?&category=' + category.id
         let response = await fetch(request).then(q => q.json())
+        let tempQuestions = []
             
         for(j = 1; j <= 3; j++) {
             response[j].value = j * 100
             apiQuestions.push(response[j])
+            tempQuestions.push(response[j])
         }
         
+        addCategory(category, tempQuestions)
+        tempQuestions = []
     })
-    console.log(apiCategories)
-    console.log(apiQuestions)
+
 }
 
 
-initPlayers()
-jeopardyCategories.forEach(category => addCategory(category))
 getCategories()
+initPlayers()
+
 
