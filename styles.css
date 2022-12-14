@@ -17,7 +17,7 @@ body {
 }
 
 .card {
-    width: 75%;
+    width: 200px;
     height: 120px;
     background-color: rgb(26,26,255);
     border-left: solid rgb(19,19,160) 10px;
@@ -46,20 +46,29 @@ body {
     text-align: center;
     font-size: 28px;
     padding: 5px;
+    width: 250px;
+    height: 75px;
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.genre-title::-webkit-scrollbar {
+    display: none;
 }
 .player-setup {
     background-color: #121826;
     text-align: center;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap; 
     align-items: center;
-    color: white;
     justify-content: center;
-    width: 25%;
+    color: white;
+    width: 100%;
 }
 .player-name-textfield {
     display: flex;
     justify-content: center;
+    margin: 5px;
     
 }
 .break {
@@ -83,11 +92,12 @@ body {
     position: relative;
     width: 100%;
     border-radius: 25%;
-    background-color: #1e3b32;
-    color: white;
+    background-color: rgb(24,171,24);
+    margin: 5px;
 }
 .submit-button {
     border-radius: 25%;
     background-color: #1e3b32;
     color: white;
+    margin: 5px;
 }

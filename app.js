@@ -28,7 +28,7 @@ function addCategory(category, questions) {
         card.addEventListener('click', flipCard)
         column.append(card)
     })
-
+    column.style.display = "none"
     game.append(column)
 }
 
@@ -90,6 +90,14 @@ function getResult() {
 }
 
 function savePlayers(playerNameList, playerSetupBox) {
+
+    const columns = Array.from(document.getElementsByClassName('genre-column')) 
+    console.log(columns)
+    
+    columns.forEach(column => {
+        column.style.display = "block"
+    })
+
     playerNameList.forEach(playerName => {
         const name = document.createElement('div')
         const span = `<span id=${playerName.value}></span>`
