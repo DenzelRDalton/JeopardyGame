@@ -91,6 +91,18 @@ function getResult() {
 }
 
 function savePlayers(playerNameList, playerSetupBox) {
+    let alertCheck = false
+    playerNameList.forEach(playerName => {
+        if(playerName.value === "" || playerName.value === undefined || playerName.value.indexOf(' ') >= 0) {
+            alertCheck = true
+        }
+        console.log(playerName)
+    })
+
+    if(alertCheck === true) {
+        alert("MUST ENTER ALL PLAYER NAMES, NO SPACES PERMITTED")
+        return
+    }
 
     const columns = Array.from(document.getElementsByClassName('genre-column')) 
     console.log(columns)
