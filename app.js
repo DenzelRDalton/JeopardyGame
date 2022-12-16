@@ -120,6 +120,10 @@ function savePlayers(playerNameList, playerSetupBox) {
 function setPlayers(numberOfPlayers, playerSetupBox) {
     const prevTextFields = document.querySelectorAll('.player-name-textfield')
     prevTextFields.forEach(textfield => textfield.remove())
+    const prevSubmitButton = document.getElementsByClassName("submit-button")
+    if(prevSubmitButton.length > 0) {
+        prevSubmitButton[0].remove()
+    }
 
     for(let index = 0; index < numberOfPlayers; index++) {
         const row = document.createElement('div')
@@ -134,6 +138,7 @@ function setPlayers(numberOfPlayers, playerSetupBox) {
     const row = document.createElement('div')
     row.classList.add('break')
     playerSetupBox.append(row)
+
     const submitButton = document.createElement('button')
     submitButton.classList.add('submit-button')
     submitButton.innerHTML = "submit"
