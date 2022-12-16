@@ -3,11 +3,10 @@ const scoreDisplay = document.getElementById('score')
 let players = []
 let apiCategories = []
 let apiQuestions = []
-
+let activeCardList = []
 
 
 function addCategory(category, questions) {
-
     const column = document.createElement('div')
     column.classList.add('genre-column')
 
@@ -26,6 +25,7 @@ function addCategory(category, questions) {
         card.setAttribute('data-value', card.innerHTML)
         
         card.addEventListener('click', flipCard)
+        activeCardList.push(card)
         column.append(card)
     })
     column.style.display = "none"
@@ -44,7 +44,9 @@ function flipCard() {
     answerButton.innerHTML = "Show Answer"
     answerButton.addEventListener('click', getResult)
     this.append(textDisplay, answerButton)
-
+    // console.log(activeCardList.length)
+    activeCardList = activeCardList.filter(ele => {return ele.getAttribute('data-question') != this.getAttribute('data-question')})
+    // console.log(activeCardList.length)
     const allCards = Array.from(document.querySelectorAll('.card'))
     allCards.forEach(card => card.removeEventListener('click', flipCard))
 }
@@ -65,8 +67,7 @@ function deactivatePlayerButtons(playerButtonList) {
 }
 
 function getResult() {
-    const allCards = Array.from(document.querySelectorAll('.card'))
-    allCards.forEach(card => card.addEventListener('click', flipCard))
+    activeCardList.forEach(card => card.addEventListener('click', flipCard))
 
     const cardOfButton = this.parentElement
     const score = parseInt(cardOfButton.getAttribute('data-value'))
