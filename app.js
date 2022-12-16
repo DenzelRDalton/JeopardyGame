@@ -167,25 +167,21 @@ function initPlayers() {
 }
 
 async function getCategories() {
-
-    
-    for(let index = 1; index <= 5; index++) {
+    let categoryIdList = []
+    while(apiCategories.length < 5) {
         let num = (Math.floor(Math.random() * 99) + 1)
         let request = 'https://jservice.io/api/category?id=' + num
-        let response = await fetch(request).then(category => category.json())
-        apiCategories.push(response)
-        
-
-        if(apiCategories[index - 1].clues_count < 5) {
-            apiCategories.pop()
-            index--
+        let response = await fetch(request).then(category => category.json()).catch(e => console.log(e))
+        if(!categoryIdList.includes(response.id) && response.clues_count > 3) {
+            apiCategories.push(response)
+            categoryIdList.push(response.id)
         }
     }
 
 
     apiCategories.forEach(async (category) => {
         let request = 'https://jservice.io/api/clues?&category=' + category.id
-        let response = await fetch(request).then(q => q.json())
+        let response = await fetch(request).then(q => q.json()).catch(e => console.log(e))
         let tempQuestions = []
             
         for(j = 1; j <= 3; j++) {
