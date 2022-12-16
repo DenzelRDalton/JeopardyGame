@@ -44,9 +44,7 @@ function flipCard() {
     answerButton.innerHTML = "Show Answer"
     answerButton.addEventListener('click', getResult)
     this.append(textDisplay, answerButton)
-    // console.log(activeCardList.length)
     activeCardList = activeCardList.filter(ele => {return ele.getAttribute('data-question') != this.getAttribute('data-question')})
-    // console.log(activeCardList.length)
     const allCards = Array.from(document.querySelectorAll('.card'))
     allCards.forEach(card => card.removeEventListener('click', flipCard))
 }
@@ -96,7 +94,6 @@ function savePlayers(playerNameList, playerSetupBox) {
         if(playerName.value === "" || playerName.value === undefined || playerName.value.indexOf(' ') >= 0) {
             alertCheck = true
         }
-        console.log(playerName)
     })
 
     if(alertCheck === true) {
@@ -105,7 +102,6 @@ function savePlayers(playerNameList, playerSetupBox) {
     }
 
     const columns = Array.from(document.getElementsByClassName('genre-column')) 
-    console.log(columns)
     
     columns.forEach(column => {
         column.style.display = "block"
